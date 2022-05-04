@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TelegramUserController;
 
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
 
@@ -15,6 +17,7 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
 //    Route::get('/settings', [SettingController::class, 'edit'])->name('settings')->middleware('admin.super');
 //    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('admin.super');
     Route::resource('users', UserController::class)->middleware('admin.super');
+    Route::resource('tg-users', TelegramUserController::class)->middleware('admin.super');
 //    Route::resource('domains', DomainController::class)->middleware('admin.super');
 //    Route::resource('links', LinkController::class);
 });
@@ -39,3 +42,5 @@ Route::name('user.')->group(function(){
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::any('/hook-88-1', [MainController::class, 'hook']);
