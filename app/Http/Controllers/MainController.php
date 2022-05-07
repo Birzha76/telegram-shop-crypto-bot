@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Exchanger\Exchanger;
 use App\Http\TGBot\TelegramBot;
 use App\Models\TelegramUser;
 use Illuminate\Http\Request;
+use function Symfony\Component\String\b;
 
 class MainController extends Controller
 {
@@ -81,6 +83,46 @@ class MainController extends Controller
 
         if (!empty($response['callback_query'])) {
             switch ($callback_data) {
+                case 'replenish_btc':
+                    $answer = __('answer.replenish_btc');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
+
+                    $message_id = $userInfo->last_message_id;
+
+                    if (!empty($message_id)) {
+                        TelegramBot::editMessage($uid, $message_id, $answer, $keyboard);
+                    } else {
+                        TelegramBot::sendMessage($uid, $answer, $keyboard);
+                    }
+                    break;
+                case 'replenish_ltc':
+                    $answer = __('answer.replenish_ltc');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
+
+                    $message_id = $userInfo->last_message_id;
+
+                    if (!empty($message_id)) {
+                        TelegramBot::editMessage($uid, $message_id, $answer, $keyboard);
+                    } else {
+                        TelegramBot::sendMessage($uid, $answer, $keyboard);
+                    }
+                    break;
+                case 'replenish_cancel':
+                    $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
+                    $exchangeRateLtc = Exchanger::getCryptoCurrency('LTC');
+
+                    $answer = str_replace([':exchange_rate_btc:', ':exchange_rate_ltc:'], [$exchangeRateBtc, $exchangeRateLtc], __('answer.balance_main'));
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_main_menu'));
+
+                    $message_id = $userInfo->last_message_id;
+
+                    if (!empty($message_id)) {
+                        TelegramBot::editMessage($uid, $message_id, $answer, $keyboard);
+                    } else {
+                        TelegramBot::sendMessage($uid, $answer, $keyboard);
+                    }
+                    break;
+
 //                case (stripos($callback_data, 'buy_product') !== false):
 //                    $productId = explode('_', $callback_data)[2];
 //
@@ -125,6 +167,15 @@ class MainController extends Controller
                 case __('button.cabinet'):
                     $answer = str_replace([':balance:'], [$userInfo->balance], __('answer.cabinet'));
                     $keyboard = TelegramBot::replyKeyboard(__('menu.main'));
+
+                    TelegramBot::sendMessage($uid, $answer, $keyboard);
+                    break;
+                case __('button.balance'):
+                    $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
+                    $exchangeRateLtc = Exchanger::getCryptoCurrency('LTC');
+
+                    $answer = str_replace([':exchange_rate_btc:', ':exchange_rate_ltc:'], [$exchangeRateBtc, $exchangeRateLtc], __('answer.balance_main'));
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_main_menu'));
 
                     TelegramBot::sendMessage($uid, $answer, $keyboard);
                     break;
