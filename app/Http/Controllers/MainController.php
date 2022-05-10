@@ -197,4 +197,9 @@ class MainController extends Controller
 
         // Конец обработки обычных сообщений
     }
+
+    public function fix()
+    {
+        //
+    }
 }

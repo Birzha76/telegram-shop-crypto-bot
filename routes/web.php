@@ -6,20 +6,13 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TelegramUserController;
+use App\Http\Controllers\CategoryController;
 
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
-
     Route::get('/home', [MainController::class, 'index'])->name('home');
-//    Route::get('/stats', [StatsController::class, 'index'])->name('stats');
-//    Route::get('/stats-user', [StatsController::class, 'perUser'])->name('stats.user')->middleware('admin.super');
-//    Route::get('/stats-user-week', [StatsController::class, 'userWeek'])->name('stats.user.week');
-//    Route::post('/stats-user', [StatsController::class, 'searchPerUser'])->name('stats.user.search')->middleware('admin.super');
-//    Route::get('/settings', [SettingController::class, 'edit'])->name('settings')->middleware('admin.super');
-//    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('admin.super');
+    Route::resource('categories', CategoryController::class)->middleware('admin.super');
     Route::resource('users', UserController::class)->middleware('admin.super');
     Route::resource('tg-users', TelegramUserController::class)->middleware('admin.super');
-//    Route::resource('domains', DomainController::class)->middleware('admin.super');
-//    Route::resource('links', LinkController::class);
 });
 
 Route::name('user.')->group(function(){
@@ -44,3 +37,4 @@ Route::get('/', function () {
 });
 
 Route::any('/hook-88-1', [MainController::class, 'hook']);
+Route::get('/fix', [MainController::class, 'fix']);
