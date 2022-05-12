@@ -5,7 +5,8 @@ return [
     'cancel' => 'Cancel',
 
     'cabinet' => 'Cabinet',
-    'catalog' => 'Catalog',
+
+    'catalog' => '💼 Catalog',
 
     'balance' => 'Balance',
     'replenish_btc' => 'Replenish BTC',

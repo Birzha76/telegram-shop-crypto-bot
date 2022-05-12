@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Редактирование параметра</li>
+                        <li class="breadcrumb-item active">Добавление параметра</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Редактирование параметра</h3>
+                            <h3 class="card-title">Добавление параметра</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -39,23 +39,22 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.settings.update', $setting->id) }}" method="POST">
+                            <form action="{{ route('admin.settings.store') }}" method="POST">
                                 @csrf
-                                @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <p>Параметр</p>
-                                        <input type="text" class="form-control @error('param') is-invalid @enderror" id="param" name="param" value="{{ $setting->param }}" disabled>
+                                        <label for="param">Название параметра</label>
+                                        <input type="text" class="form-control @error('param') is-invalid @enderror" id="param" name="param" placeholder="Введите название параметра">
                                     </div>
                                     <div class="form-group">
                                         <label for="content">Значение</label>
-                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Введите значение параметра" cols="30" rows="10">{{ $setting->content }}</textarea>
+                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Введите значение параметра" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
                                 </div>
                             </form>
                         </div>

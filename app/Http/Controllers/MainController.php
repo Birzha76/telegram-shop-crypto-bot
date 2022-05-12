@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Exchanger\Exchanger;
 use App\Http\TGBot\TelegramBot;
+use App\Http\TGBot\TelegramHelper;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\TelegramUser;
 use Illuminate\Http\Request;
 
@@ -82,44 +85,72 @@ class MainController extends Controller
 
         if (!empty($response['callback_query'])) {
             switch ($callback_data) {
-                case 'replenish_btc':
-                    $answer = __('answer.replenish_btc');
-                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
+                case 'home':
+                    $answer = __('answer.start');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.main_menu'));
 
-                    $message_id = $userInfo->last_message_id;
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
 
-                    if (!empty($message_id)) {
-                        TelegramBot::editMessage($uid, $message_id, $answer, $keyboard);
-                    } else {
-                        TelegramBot::sendMessage($uid, $answer, $keyboard);
+                    if ($userInfo->scene !== 'home') {
+                        $userInfo->scene = 'home';
+                        $userInfo->save();
                     }
                     break;
-                case 'replenish_ltc':
-                    $answer = __('answer.replenish_ltc');
-                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
+                case 'catalog':
+                    $answer = __('answer.catalog_main');
+                    $keyboard = TelegramHelper::getCatalogMainMenu();
 
-                    $message_id = $userInfo->last_message_id;
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case (stripos($callback_data, 'get_category') !== false):
+                    $categoryId = explode('get_category_', $callback_data)[1];
 
-                    if (!empty($message_id)) {
-                        TelegramBot::editMessage($uid, $message_id, $answer, $keyboard);
-                    } else {
-                        TelegramBot::sendMessage($uid, $answer, $keyboard);
+                    $category = Category::find($categoryId);
+
+                    if ($category->categories->count() > 0) {
+                        $answer = __('answer.catalog_main') . '
+
+' . $category->name;
+                        $keyboard = TelegramHelper::getSubcategoryMenu($category);
+                    }else {
+                        $answer = __('answer.catalog_main') . '
+
+' . $category->name;
+                        $keyboard = TelegramHelper::getProductsMenuByCategory($category);
+                    }
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case (stripos($callback_data, 'get_product') !== false):
+                    $productId = explode('get_product_', $callback_data)[1];
+
+                    $product = Product::find($productId);
+
+                    if ($userInfo->balance < $product->price) {
+                        TelegramBot::callbackAnnotationSet($callback_id, __('answer.no_money'));
+                        exit();
                     }
                     break;
-                case 'replenish_cancel':
+                case 'balance':
                     $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
                     $exchangeRateLtc = Exchanger::getCryptoCurrency('LTC');
 
                     $answer = str_replace([':exchange_rate_btc:', ':exchange_rate_ltc:'], [$exchangeRateBtc, $exchangeRateLtc], __('answer.balance_main'));
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_main_menu'));
 
-                    $message_id = $userInfo->last_message_id;
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case 'replenish_btc':
+                    $answer = __('answer.replenish_btc');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
 
-                    if (!empty($message_id)) {
-                        TelegramBot::editMessage($uid, $message_id, $answer, $keyboard);
-                    } else {
-                        TelegramBot::sendMessage($uid, $answer, $keyboard);
-                    }
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case 'replenish_ltc':
+                    $answer = __('answer.replenish_ltc');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
                     break;
 
 //                case (stripos($callback_data, 'buy_product') !== false):
@@ -163,21 +194,6 @@ class MainController extends Controller
 
         if (!empty($response['message'])) {
             switch ($text) {
-                case __('button.cabinet'):
-                    $answer = str_replace([':balance:'], [$userInfo->balance], __('answer.cabinet'));
-                    $keyboard = TelegramBot::replyKeyboard(__('menu.main'));
-
-                    TelegramBot::sendMessage($uid, $answer, $keyboard);
-                    break;
-                case __('button.balance'):
-                    $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
-                    $exchangeRateLtc = Exchanger::getCryptoCurrency('LTC');
-
-                    $answer = str_replace([':exchange_rate_btc:', ':exchange_rate_ltc:'], [$exchangeRateBtc, $exchangeRateLtc], __('answer.balance_main'));
-                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_main_menu'));
-
-                    TelegramBot::sendMessage($uid, $answer, $keyboard);
-                    break;
 //                case (in_array($text, $allServices)):
 //                    $serviceInfo = Service::where('name', $text)->first();
 //
@@ -188,7 +204,7 @@ class MainController extends Controller
 //                    break;
                 default:
                     $answer = __('answer.start');
-                    $keyboard = TelegramBot::replyKeyboard(__('menu.main'));
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.main_menu'));
 
                     TelegramBot::sendMessage($uid, $answer, $keyboard);
             }

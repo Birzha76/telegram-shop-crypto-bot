@@ -6,6 +6,8 @@ return [
 ✅ Click 🛒 CATALOG button and choose an item
 ✅ Click on item and buy it with seconds!',
 
+    'catalog_main' => 'Shop',
+    'no_money' => '🚫 You don\'t have enough money',
 
     'balance_main' => '💵 Balance:
 
