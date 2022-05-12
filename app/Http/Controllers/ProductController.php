@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,38 @@ class ProductController extends Controller
         $products = Product::paginate(20);
 
         return view('admin.products.index', compact('products'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+
+        return view('admin.products.create', compact('categories'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3',
+            'category_id' => 'nullable|exists:categories,id',
+        ]);
+
+        Category::create($request->all());
+
+        return redirect()->route('admin.categories.index')->with('success', 'Категория добавлена');
     }
 
     /**

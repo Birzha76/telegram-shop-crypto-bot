@@ -6,7 +6,6 @@ use App\Http\Exchanger\Exchanger;
 use App\Http\TGBot\TelegramBot;
 use App\Models\TelegramUser;
 use Illuminate\Http\Request;
-use function Symfony\Component\String\b;
 
 class MainController extends Controller
 {

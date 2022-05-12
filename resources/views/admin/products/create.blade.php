@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Категории</h1>
+                    <h1>Продукты</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Добавление категории</li>
+                        <li class="breadcrumb-item active">Добавление продукта</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Добавление категории</h3>
+                            <h3 class="card-title">Добавление продукта</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -39,22 +39,19 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.categories.store') }}" method="POST">
+                            <form action="{{ route('admin.products.store') }}" method="POST">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Название</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Введите название категории">
+                                        <label for="title">Название</label>
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Введите название продукта">
                                     </div>
                                     <div class="form-group">
-                                        <label for="category_id">Родительская категория</label>
+                                        <label for="category_id">Выберите категорию</label>
                                         <select class="form-control" name="category_id">
                                             <option value="">-</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @foreach($category->childrenCategories as $childCategory)
-                                                    @include('admin.categories.child_category', ['child_category' => $childCategory])
-                                                @endforeach
                                             @endforeach
                                         </select>
                                     </div>
