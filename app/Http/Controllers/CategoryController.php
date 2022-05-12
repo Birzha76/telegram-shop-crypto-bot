@@ -59,8 +59,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('admin.users.edit', compact('user'));
+        $currentCategory = Category::find($id);
+        $categories = Category::whereNull('category_id')
+            ->with('childrenCategories')
+            ->get();
+
+        return view('admin.categories.edit', compact('currentCategory', 'categories'));
     }
 
     /**
@@ -73,21 +77,14 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => [
-                'required',
-                Rule::unique('users')->ignore($id),
-            ],
-            'email' => [
-                'required',
-                Rule::unique('users')->ignore($id),
-            ],
-            'percent' => 'nullable|numeric',
-            'is_admin' => 'required',
+            'name' => 'required|min:3',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
-        $user = User::find($id);
-        $user->update($request->all());
 
-        return redirect()->route('admin.users.index')->with('success', 'Информация о пользователе обновлена');
+        $category = Category::find($id);
+        $category->update($request->all());
+
+        return redirect()->route('admin.categories.index')->with('success', 'Категория обновлена');
     }
 
     /**

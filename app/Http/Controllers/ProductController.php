@@ -27,8 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::whereNull('category_id')
-            ->with('childrenCategories')
+        $categories = Category::doesntHave('categories')
             ->get();
 
         return view('admin.products.create', compact('categories'));
@@ -43,13 +42,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3',
-            'category_id' => 'nullable|exists:categories,id',
+            'title' => 'required|min:3|max:20',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|min:0',
+            'description' => 'required|min:10|max:1024',
+            'details' => 'required|min:3',
         ]);
 
-        Category::create($request->all());
+        Product::create($request->all());
 
-        return redirect()->route('admin.categories.index')->with('success', 'Категория добавлена');
+        return redirect()->route('admin.products.index')->with('success', 'Продукт добавлен');
     }
 
     /**

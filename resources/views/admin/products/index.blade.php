@@ -43,7 +43,7 @@
                             <th style="width: 10px">#</th>
                             <th>Название продукта</th>
                             <th>Категория</th>
-                            <th>Цена</th>
+                            <th>Цена, $</th>
                             <th style="width: 40px">Действия</th>
                         </tr>
                         </thead>

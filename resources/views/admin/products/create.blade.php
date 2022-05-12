@@ -48,12 +48,26 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">Выберите категорию</label>
-                                        <select class="form-control" name="category_id">
+                                        <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                                             <option value="">-</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
+                                            @if(count($categories))
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="price">Стоимость</label>
+                                        <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="Введите стоимость продукта">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Описание</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Введите описание продукта" cols="30" rows="10"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="details">Содержание продукта</label>
+                                        <textarea class="form-control @error('details') is-invalid @enderror" id="details" name="details" placeholder="Введите содержание продукта" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
