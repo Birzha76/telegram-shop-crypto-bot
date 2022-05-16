@@ -6,12 +6,12 @@
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1>Главная</h1>
+        <h1>{{ __('ui.main') }}</h1>
         </div>
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item">Админ-панель</li>
-            <li class="breadcrumb-item active">Главная</li>
+            <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+            <li class="breadcrumb-item active">{{ __('ui.main') }}</li>
         </ol>
         </div>
     </div>
@@ -24,7 +24,7 @@
     <!-- Default box -->
     <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Главная страница</h3>
+        <h3 class="card-title">{{ __('ui.main') }}</h3>
 
         <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="card-body">
-        Добро пожаловать в панель управления!
+        {{ __('ui.welcome') }}
     </div>
     <!-- /.card-body -->
     </div>

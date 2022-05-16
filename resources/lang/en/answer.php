@@ -13,30 +13,24 @@ return [
 
 🌞 Current rate BTC: 1 BTC = :exchange_rate_btc: usd
 
-Your wallet balance: 0 BTC (0 usd)
-Total uploaded: 0 BTC (0 usd)
-Total spent: 0 BTC (0 usd)
+Your wallet balance: :balance_btc: BTC (:balance_btc_in_usd: usd)
 
 
 🌞 Current rate LTC: 1 LTC = :exchange_rate_ltc: usd
 
-Your wallet balance: 0 LTC (0 usd)
-Total uploaded: 0 LTC (0 usd)
-Total spent: 0 LTC (0 usd)',
+Your wallet balance: :balance_ltc: LTC (:balance_ltc_in_usd: usd)',
     'replenish_btc' => '💵 Balance
 
-Your personal BTC address to replenish your wallet is below.
+After the transfer of funds, send a screenshot of the check to @birzha76.
 
-The balance of your wallet will be updated after 1 confirmation of the bitcoin network (usually within an hour).
-Address for one recharge, do not reuse it.
+Your BTC address to replenish your wallet is below.
 
-3MKyMLC2SB9UofeDdkiCt2bhzMuYFDWJqG',
+<code>:wallet_btc:</code>',
     'replenish_ltc' => '💵 Balance
 
-Your personal LTC address to replenish your wallet is below.
+After the transfer of funds, send a screenshot of the check to @birzha76.
 
-The balance of your wallet will be updated after 1 confirmation of the bitcoin network (usually within an hour).
-Address for one recharge, do not reuse it.
+Your LTC address to replenish your wallet is below.
 
-3MKyMLC2SB9UofeDdkiCt2bhzMuYFDWJqG',
+<code>:wallet_ltc:</code>',
 ];

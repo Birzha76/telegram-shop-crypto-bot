@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Пользователи</h1>
+                    <h1>{{ __('ui.admins') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Редактирование пользователя</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.admin_editing') }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Редактирование пользователя</h3>
+                            <h3 class="card-title">{{ __('ui.admin_editing') }}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -44,29 +44,25 @@
                                 @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Логин</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Введите логин" value="{{ $user->name }}">
+                                        <label for="name">{{ __('ui.username') }}</label>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('ui.enter_login') }}" value="{{ $user->name }}">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Введите email" value="{{ $user->email }}">
+                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('ui.enter_email') }}" value="{{ $user->email }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="percent">Процент</label>
-                                        <input type="text" class="form-control @error('percent') is-invalid @enderror" id="percent" name="percent" placeholder="Введите отображаемый процент дохода" value="{{ $user->percent }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="percent">Администратор?</label>
+                                        <label for="percent">{{ __('ui.admin') }}?</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="is_admin" id="is_admin1" value="1" {{ $user->is_admin == 1 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="is_admin1">
-                                                Да
+                                                {{ __('ui.yes') }}
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="is_admin" id="is_admin0" value="0" {{ $user->is_admin == 0 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="is_admin0">
-                                                Нет
+                                                {{ __('ui.no') }}
                                             </label>
                                         </div>
                                     </div>
@@ -74,7 +70,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('ui.save') }}</button>
                                 </div>
                             </form>
                         </div>

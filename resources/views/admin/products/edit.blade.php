@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Пользователи</h1>
+                    <h1>{{ __('ui.products') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Редактирование пользователя</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.product_editing') }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Редактирование пользователя</h3>
+                            <h3 class="card-title">{{ __('ui.product_editing') }}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -39,42 +39,42 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                            <form action="{{ route('admin.products.update', $product->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Логин</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Введите логин" value="{{ $user->name }}">
+                                        <label for="title">{{ __('ui.name') }}</label>
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="{{ __('ui.enter_product_name') }}" value="{{ $product->title }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Введите email" value="{{ $user->email }}">
+                                        <label for="category_id">{{ __('ui.select_category') }}</label>
+                                        <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
+                                            <option value="">-</option>
+                                            @if(count($categories))
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="percent">Процент</label>
-                                        <input type="text" class="form-control @error('percent') is-invalid @enderror" id="percent" name="percent" placeholder="Введите отображаемый процент дохода" value="{{ $user->percent }}">
+                                        <label for="price">{{ __('ui.price') }}</label>
+                                        <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="{{ __('ui.enter_product_price') }}" value="{{ $product->price }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="percent">Администратор?</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="is_admin" id="is_admin1" value="1" {{ $user->is_admin == 1 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="is_admin1">
-                                                Да
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="is_admin" id="is_admin0" value="0" {{ $user->is_admin == 0 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="is_admin0">
-                                                Нет
-                                            </label>
-                                        </div>
+                                        <label for="description">{{ __('ui.description') }}</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="{{ __('ui.enter_product_description') }}" cols="30" rows="10">{{ $product->description }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="details">{{ __('ui.product_content') }}</label>
+                                        <textarea class="form-control @error('details') is-invalid @enderror" id="details" name="details" placeholder="{{ __('ui.enter_product_content') }}" cols="30" rows="10">{{ $product->details }}</textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('ui.save') }}</button>
                                 </div>
                             </form>
                         </div>

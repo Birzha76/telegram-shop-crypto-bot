@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Настройки</h1>
+                    <h1>{{ __('ui.settings') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Настройки</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.settings_list') }}</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Список параметров</h3>
+                <h3 class="card-title">{{ __('ui.settings_list') }}</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -41,9 +41,9 @@
                         <thead>
                         <tr>
                             <th style="width: 10px">#</th>
-                            <th>Параметр</th>
-                            <th>Значение</th>
-                            <th style="width: 40px">Действия</th>
+                            <th>{{ __('ui.parameter') }}</th>
+                            <th>{{ __('ui.value') }}</th>
+                            <th style="width: 100px">{{ __('ui.actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,14 +57,14 @@
                                     <form action="{{ route('admin.settings.destroy', $setting->id) }}" method="POST" class="float-left">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')"><i class="fas fa-trash-alt"></i></button></form>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('ui.confirm_deletion') }}')"><i class="fas fa-trash-alt"></i></button></form>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 @else
-                    <p>Настройки пока не заданы.</p>
+                    <p>{{ __('ui.no_settings') }}</p>
                 @endif
 
             </div>

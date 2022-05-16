@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Админ-панель</title>
+    <title>{{ __('ui.admin_panel') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -22,7 +22,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('user.logout') }}" class="nav-link">Выйти</a>
+                <a href="{{ route('user.logout') }}" class="nav-link">{{ __('ui.log_off') }}</a>
             </li>
         </ul>
 
@@ -40,13 +40,6 @@
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="{{ route('admin.home') }}" class="brand-link" target="_blank">
-            <img src="{{ asset('assets/admin/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                 class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">На сайт</span>
-        </a>
-
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Sidebar user (optional) -->
@@ -60,19 +53,6 @@
                 </div>
             </div>
 
-            <!-- SidebarSearch Form -->
-            <div class="form-inline">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Поиск"
-                           aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -82,7 +62,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.home') }}" class="nav-link">
                             <i class="nav-icon fas fa-home"></i>
-                            <p>Главная</p>
+                            <p>{{ __('ui.main') }}</p>
                         </a>
                     </li>
                     @if( Auth::user()->is_admin)
@@ -90,7 +70,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-folder"></i>
                                 <p>
-                                    Категории
+                                    {{ __('ui.categories') }}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -98,13 +78,13 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.categories.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Список категорий</p>
+                                        <p>{{ __('ui.categories_list') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.categories.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Добавить категорию</p>
+                                        <p>{{ __('ui.add_category') }}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -113,7 +93,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-store"></i>
                                 <p>
-                                    Продукты
+                                    {{ __('ui.products') }}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -121,13 +101,13 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.products.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Список продуктов</p>
+                                        <p>{{ __('ui.products_list') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.products.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Добавить продукт</p>
+                                        <p>{{ __('ui.add_product') }}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -136,7 +116,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fab fa-telegram"></i>
                                 <p>
-                                    Пользователи
+                                    {{ __('ui.users') }}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -144,7 +124,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.tg-users.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Список пользователей</p>
+                                        <p>{{ __('ui.users_list') }}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -153,7 +133,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-cubes"></i>
                                 <p>
-                                    Настройки
+                                    {{ __('ui.settings') }}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -161,13 +141,13 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.settings.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Список параметров</p>
+                                        <p>{{ __('ui.settings_list') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.settings.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Добавить параметр</p>
+                                        <p>{{ __('ui.add_parameter') }}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -176,7 +156,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Администраторы
+                                    {{ __('ui.admins') }}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -184,13 +164,13 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.users.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Список админов</p>
+                                        <p>{{ __('ui.admins_list') }}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.users.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Добавить админа</p>
+                                        <p>{{ __('ui.add_admin') }}</p>
                                     </a>
                                 </li>
                             </ul>

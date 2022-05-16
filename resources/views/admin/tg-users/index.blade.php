@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Пользователи бота</h1>
+                    <h1>{{ __('ui.users') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Пользователи бота</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.bot_users') }}</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Список пользователей бота <span class="badge bg-primary">{{ $users->total() }}</span></h3>
+                <h3 class="card-title">{{ __('ui.list_bot_users') }} <span class="badge bg-primary">{{ $users->total() }}</span></h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -42,8 +42,8 @@
                         <tr>
                             <th style="width: 10px">#</th>
                             <th>Telegram ID</th>
-                            <th>Имя / Логин</th>
-                            <th style="width: 40px">Действия</th>
+                            <th>{{ __('ui.name_login') }}</th>
+                            <th style="width: 100px">{{ __('ui.actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,14 +57,14 @@
                                     <form action="{{ route('admin.tg-users.destroy', $user->id) }}" method="POST" class="float-left">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')"><i class="fas fa-trash-alt"></i></button></form>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('ui.confirm_deletion') }}')"><i class="fas fa-trash-alt"></i></button></form>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 @else
-                    <p>Пользователей пока нет.</p>
+                    <p>{{ __('ui.no_users') }}</p>
                 @endif
             </div>
             <!-- /.card-body -->

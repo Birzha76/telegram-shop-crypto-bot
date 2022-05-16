@@ -11,18 +11,19 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
         $users = User::paginate(10);
+
         return view('admin.users.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -33,7 +34,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -41,23 +42,24 @@ class UserController extends Controller
             'name' => 'required|unique:users,name',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:5',
-            'percent' => 'nullable|numeric',
             'is_admin' => 'required',
         ]);
+
         User::create($request->all());
 
-        return redirect()->route('admin.users.index')->with('success', 'Пользователь добавлен');
+        return redirect()->route('admin.users.index')->with('success', __('ui.administrator_added'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
         $user = User::find($id);
+
         return view('admin.users.edit', compact('user'));
     }
 
@@ -66,7 +68,7 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -79,26 +81,26 @@ class UserController extends Controller
                 'required',
                 Rule::unique('users')->ignore($id),
             ],
-            'percent' => 'nullable|numeric',
             'is_admin' => 'required',
         ]);
+
         $user = User::find($id);
         $user->update($request->all());
 
-        return redirect()->route('admin.users.index')->with('success', 'Информация о пользователе обновлена');
+        return redirect()->route('admin.users.index')->with('success', __('ui.admin_updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'Пользователь удален');
+        return redirect()->route('admin.users.index')->with('success', __('ui.administrator_removed'));
     }
 }

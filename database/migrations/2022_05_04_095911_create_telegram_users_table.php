@@ -20,6 +20,8 @@ class CreateTelegramUsersTable extends Migration
             $table->string('username')->nullable();
             $table->string('first_name')->nullable();
             $table->decimal('balance', 15, 2)->default(0);
+            $table->decimal('balance_btc', 15, 10)->default(0);
+            $table->decimal('balance_ltc', 15, 10)->default(0);
             $table->string('scene')->default('home')->nullable();
             $table->string('last_message_id')->nullable();
             $table->boolean('ban')->default(0);

@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Настройки</h1>
+                    <h1>{{ __('ui.settings') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Добавление параметра</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.adding_parameter') }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Добавление параметра</h3>
+                            <h3 class="card-title">{{ __('ui.adding_parameter') }}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -43,18 +43,18 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="param">Название параметра</label>
-                                        <input type="text" class="form-control @error('param') is-invalid @enderror" id="param" name="param" placeholder="Введите название параметра">
+                                        <label for="param">{{ __('ui.parameter') }}</label>
+                                        <input type="text" class="form-control @error('param') is-invalid @enderror" id="param" name="param" placeholder="{{ __('ui.enter_parameter_name') }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="content">Значение</label>
-                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="Введите значение параметра" cols="30" rows="10"></textarea>
+                                        <label for="content">{{ __('ui.value') }}</label>
+                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" placeholder="{{ __('ui.enter_parameter_value') }}" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('ui.add') }}</button>
                                 </div>
                             </form>
                         </div>

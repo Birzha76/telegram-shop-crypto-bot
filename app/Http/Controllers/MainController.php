@@ -7,6 +7,7 @@ use App\Http\TGBot\TelegramBot;
 use App\Http\TGBot\TelegramHelper;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\TelegramUser;
 use Illuminate\Http\Request;
 
@@ -135,19 +136,41 @@ class MainController extends Controller
                     $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
                     $exchangeRateLtc = Exchanger::getCryptoCurrency('LTC');
 
-                    $answer = str_replace([':exchange_rate_btc:', ':exchange_rate_ltc:'], [$exchangeRateBtc, $exchangeRateLtc], __('answer.balance_main'));
+                    $answer = str_replace([
+                        ':exchange_rate_btc:',
+                        ':exchange_rate_ltc:',
+                        ':balance_btc:',
+                        ':balance_btc_in_usd:',
+                        ':balance_ltc:',
+                        ':balance_ltc_in_usd:'
+                    ], [
+                        $exchangeRateBtc,
+                        $exchangeRateLtc,
+                        $userInfo->balance_btc,
+                        round($userInfo->balance_btc * $exchangeRateBtc),
+                        $userInfo->balance_ltc,
+                        round($userInfo->balance_ltc * $exchangeRateLtc),
+                    ], __('answer.balance_main'));
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_main_menu'));
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
                     break;
                 case 'replenish_btc':
-                    $answer = __('answer.replenish_btc');
+                    $answer = str_replace([
+                        ':wallet_btc:',
+                    ], [
+                        Setting::where('param', 'wallet_btc')->first()->content,
+                    ], __('answer.replenish_btc'));
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
                     break;
                 case 'replenish_ltc':
-                    $answer = __('answer.replenish_ltc');
+                    $answer = str_replace([
+                        ':wallet_ltc:',
+                    ], [
+                        Setting::where('param', 'wallet_ltc')->first()->content,
+                    ], __('answer.replenish_ltc'));
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);

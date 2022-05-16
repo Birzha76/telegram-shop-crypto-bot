@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Категории</h1>
+                    <h1>{{ __('ui.categories') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Добавление категории</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.adding_category') }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Добавление категории</h3>
+                            <h3 class="card-title">{{ __('ui.adding_category') }}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -43,11 +43,11 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Название</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Введите название категории">
+                                        <label for="name">{{ __('ui.name') }}</label>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('ui.enter_category_name') }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="category_id">Родительская категория</label>
+                                        <label for="category_id">{{ __('ui.parent_category') }}</label>
                                         <select class="form-control" name="category_id">
                                             <option value="">-</option>
                                             @foreach($categories as $category)
@@ -62,7 +62,7 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('ui.add') }}</button>
                                 </div>
                             </form>
                         </div>

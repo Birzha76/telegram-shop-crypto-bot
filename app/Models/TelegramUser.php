@@ -12,6 +12,8 @@ class TelegramUser extends Model
         'username',
         'first_name',
         'balance',
+        'balance_btc',
+        'balance_ltc',
         'scene',
         'last_message_id',
         'ban',

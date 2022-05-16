@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Продукты</h1>
+                    <h1>{{ __('ui.products') }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item">Админ-панель</li>
-                        <li class="breadcrumb-item active">Добавление продукта</li>
+                        <li class="breadcrumb-item">{{ __('ui.admin_panel') }}</li>
+                        <li class="breadcrumb-item active">{{ __('ui.product_addition') }}</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Добавление продукта</h3>
+                            <h3 class="card-title">{{ __('ui.product_addition') }}</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -43,11 +43,11 @@
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="title">Название</label>
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Введите название продукта">
+                                        <label for="title">{{ __('ui.name') }}</label>
+                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="{{ __('ui.enter_product_name') }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="category_id">Выберите категорию</label>
+                                        <label for="category_id">{{ __('ui.select_category') }}</label>
                                         <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                                             <option value="">-</option>
                                             @if(count($categories))
@@ -58,22 +58,22 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="price">Стоимость</label>
-                                        <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="Введите стоимость продукта">
+                                        <label for="price">{{ __('ui.price') }}</label>
+                                        <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="{{ __('ui.enter_product_price') }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="description">Описание</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Введите описание продукта" cols="30" rows="10"></textarea>
+                                        <label for="description">{{ __('ui.description') }}</label>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="{{ __('ui.enter_product_description') }}" cols="30" rows="10"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="details">Содержание продукта</label>
-                                        <textarea class="form-control @error('details') is-invalid @enderror" id="details" name="details" placeholder="Введите содержание продукта" cols="30" rows="10"></textarea>
+                                        <label for="details">{{ __('ui.product_content') }}</label>
+                                        <textarea class="form-control @error('details') is-invalid @enderror" id="details" name="details" placeholder="{{ __('ui.enter_product_content') }}" cols="30" rows="10"></textarea>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('ui.add') }}</button>
                                 </div>
                             </form>
                         </div>
