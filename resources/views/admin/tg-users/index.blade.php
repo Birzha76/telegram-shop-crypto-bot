@@ -43,6 +43,8 @@
                             <th style="width: 10px">#</th>
                             <th>Telegram ID</th>
                             <th>{{ __('ui.name_login') }}</th>
+                            <th>{{ __('ui.balance_btc') }}</th>
+                            <th>{{ __('ui.balance_ltc') }}</th>
                             <th style="width: 100px">{{ __('ui.actions') }}</th>
                         </tr>
                         </thead>
@@ -52,6 +54,8 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->uid }}</td>
                                 <td>{{ $user->first_name ?? '' }} {{ !empty($user->username) ? '@' . $user->username : '' }}</td>
+                                <td>{{ $user->balance_btc }}</td>
+                                <td>{{ $user->balance_ltc }}</td>
                                 <td>
                                     <a href="{{ route('admin.tg-users.edit', $user->id) }}" class="btn btn-info btn-sm float-left mr-1"><i class="fas fa-pencil-alt"></i></a>
                                     <form action="{{ route('admin.tg-users.destroy', $user->id) }}" method="POST" class="float-left">

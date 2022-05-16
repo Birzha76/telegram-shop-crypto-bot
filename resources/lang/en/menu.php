@@ -17,6 +17,15 @@ return [
             ],
         ],
     ],
+    'your_item_menu' => [
+        [
+
+            [
+                'text' => __('button.back'),
+                'callback_data' => 'home',
+            ],
+        ],
+    ],
     'balance_main_menu' => [
         [
 

@@ -8,6 +8,12 @@ return [
 
     'catalog_main' => 'Shop',
     'no_money' => '🚫 You don\'t have enough money',
+    'already_bought' => 'Someone has already bought this item',
+    'your_item' => 'Thank you for your purchase!
+
+Here is your item:
+
+:details:',
 
     'balance_main' => '💵 Balance:
 

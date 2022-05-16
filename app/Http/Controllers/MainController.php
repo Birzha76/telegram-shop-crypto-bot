@@ -127,10 +127,91 @@ class MainController extends Controller
 
                     $product = Product::find($productId);
 
-                    if ($userInfo->balance < $product->price) {
-                        TelegramBot::callbackAnnotationSet($callback_id, __('answer.no_money'));
+                    $answer = $product->title . '
+
+Price: ' . $product->price . ' $
+
+' . $product->description;
+
+                    $arrayOfKeyboard = [
+                        [
+
+                            [
+                                'text' => __('button.buy_with_btc'),
+                                'callback_data' => 'buy_product_btc_' . $productId,
+                            ],
+                            [
+                                'text' => __('button.buy_with_ltc'),
+                                'callback_data' => 'buy_product_ltc_' . $productId,
+                            ],
+                        ],
+                        [
+
+                            [
+                                'text' => __('button.back'),
+                                'callback_data' => 'get_category_' . $product->category_id,
+                            ],
+                        ],
+                        [
+
+                            [
+                                'text' => __('button.to_main_menu'),
+                                'callback_data' => 'home',
+                            ],
+                        ],
+                    ];
+                    $keyboard = TelegramBot::inlineKeyboard($arrayOfKeyboard);
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case (stripos($callback_data, 'buy_product') !== false):
+                    $productId = explode('_', $callback_data)[3];
+                    $paymentMethod = explode('_', $callback_data)[2];
+
+                    $product = Product::find($productId);
+
+                    if (!$product) {
+                        TelegramBot::callbackAnnotationSet($callback_id, __('answer.already_bought'));
                         exit();
                     }
+
+                    if ($paymentMethod == 'ltc') {
+                        $exchangeRate = Exchanger::getCryptoCurrency('LTC');
+                    }else {
+                        $exchangeRate = Exchanger::getCryptoCurrency('BTC');
+                    }
+
+                    $productPriceInCrypto = round($product->price / $exchangeRate, 5);
+
+                    if ($paymentMethod == 'ltc') {
+                        if ($userInfo->balance_ltc < $productPriceInCrypto) {
+                            TelegramBot::callbackAnnotationSet($callback_id, __('answer.no_money'));
+                            exit();
+                        }
+
+                        $userInfo->balance_ltc -= $productPriceInCrypto;
+                        $userInfo->save();
+                    } else {
+                        if ($userInfo->balance_btc < $productPriceInCrypto) {
+                            TelegramBot::callbackAnnotationSet($callback_id, __('answer.no_money'));
+                            exit();
+                        }
+
+                        $userInfo->balance_btc -= $productPriceInCrypto;
+                        $userInfo->save();
+                    }
+
+                    $answer = str_replace([
+                        ':details:',
+                    ], [
+                        $product->details,
+                    ], __('answer.your_item'));
+
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.your_item_menu'));
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+
+                    $product->delete();
                     break;
                 case 'balance':
                     $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
