@@ -9,11 +9,13 @@ use App\Http\Controllers\TelegramUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CheckController;
 
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
     Route::get('/home', [MainController::class, 'index'])->name('home');
     Route::resource('categories', CategoryController::class)->middleware('admin.super');
     Route::resource('products', ProductController::class)->middleware('admin.super');
+    Route::resource('checks', CheckController::class)->middleware('admin.super');
     Route::resource('users', UserController::class)->middleware('admin.super');
     Route::resource('tg-users', TelegramUserController::class)->middleware('admin.super');
     Route::resource('settings', SettingController::class)->middleware('admin.super');

@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CheckStatus;
 use App\Http\Exchanger\Exchanger;
 use App\Http\TGBot\TelegramBot;
 use App\Http\TGBot\TelegramHelper;
 use App\Models\Category;
+use App\Models\Check;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Models\TelegramUser;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MainController extends Controller
 {
@@ -235,6 +241,11 @@ Price: ' . $product->price . ' $
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_main_menu'));
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+
+                    if ($userInfo->scene !== 'home') {
+                        $userInfo->scene = 'home';
+                        $userInfo->save();
+                    }
                     break;
                 case 'replenish_btc':
                     $answer = str_replace([
@@ -255,6 +266,15 @@ Price: ' . $product->price . ' $
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case 'send_check':
+                    $answer = __('answer.send_check');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_send_check_menu'));
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+
+                    $userInfo->scene = 'send_check';
+                    $userInfo->save();
                     break;
 
 //                case (stripos($callback_data, 'buy_product') !== false):
@@ -298,14 +318,51 @@ Price: ' . $product->price . ' $
 
         if (!empty($response['message'])) {
             switch ($text) {
-//                case (in_array($text, $allServices)):
-//                    $serviceInfo = Service::where('name', $text)->first();
-//
-//                    $answer = str_replace([':service:'], [$text], __('answer.service'));
-//                    $keyboard = TelegramHelper::makeServiceInlineKeyboard($serviceInfo->id);
-//
-//                    TelegramBot::sendMessage($uid, $answer, $keyboard);
-//                    break;
+                case ($userInfo->scene == 'send_check'):
+                    TelegramBot::deleteMessage($uid, $message_id);
+
+                    Log::channel('telegram')->info($response);
+
+                    if (empty($response['message']['document'])) {
+                        $answer = __('answer.invalid_check');
+                        $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_send_check_menu'));
+
+                        TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                        exit();
+                    }
+
+                    $fileId = $response['message']['document']['file_id'];
+                    $fileName = $response['message']['document']['file_name'];
+                    $fileLength = $response['message']['document']['file_size'];
+                    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                    if ($fileLength > (1000000 * 20)) {
+                        $answer = __('answer.invalid_check_size');
+                        $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_send_check_menu'));
+
+                        TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                        exit();
+                    }
+
+                    $checkFileContent = TelegramBot::getFileById($fileId);
+                    $pathForSave = 'public/checks/' . Str::uuid() . '.' . $fileExtension;
+
+                    Storage::put($pathForSave, $checkFileContent);
+
+                    Check::create([
+                        'user_id' => $userInfo->id,
+                        'file_path' => $pathForSave,
+                        'status' => CheckStatus::UnderConsideration,
+                    ]);
+
+                    $answer = __('answer.check_send_success');
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.main_menu'));
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+
+                    $userInfo->scene = 'home';
+                    $userInfo->save();
+                    break;
                 default:
                     $answer = __('answer.start');
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.main_menu'));

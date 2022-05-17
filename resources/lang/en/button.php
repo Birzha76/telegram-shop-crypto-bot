@@ -14,4 +14,5 @@ return [
     'balance' => 'Balance',
     'replenish_btc' => 'Replenish BTC',
     'replenish_ltc' => 'Replenish LTC',
+    'send_check' => 'Send Check',
 ];

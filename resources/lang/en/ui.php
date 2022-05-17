@@ -15,6 +15,9 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'confirm_deletion' => 'Confirm deletion',
+    'request_date' => 'Request Date',
+    'update_date' => 'Update date',
+    'status' => 'Status',
 
     'category' => 'Category',
     'categories' => 'Categories',
@@ -46,6 +49,14 @@ return [
     'product_added' => 'Product added',
     'product_updated' => 'Product updated',
     'product_removed' => 'Product removed',
+
+    'checks' => 'Checks',
+    'check' => 'Check',
+    'checks_list' => 'Checks list',
+    'no_checks' => 'No checks',
+    'check_status_updated' => 'Check status information updated',
+    'check_removed' => 'Check removed',
+    'check_editing' => 'Check editing',
 
     'users' => 'Users',
     'users_list' => 'Users List',

@@ -106,6 +106,16 @@ class TelegramBot
         return self::send('sendMessage', $data);
     }
 
+    public static function deleteMessage($chatId, $messageId)
+    {
+        $data = [
+            'chat_id' => $chatId,
+            'message_id' => $messageId,
+        ];
+
+        return self::send('deleteMessage', $data);
+    }
+
     public static function editMessage($chatId, $messageId, $message, $markup = null, $disableUrlPreview = false)
     {
         $data = [
@@ -167,6 +177,17 @@ class TelegramBot
         ];
 
         return self::send('sendVideo', $data);
+    }
+
+    public static function getFileById($fileId)
+    {
+        $data = [
+            'file_id' => $fileId,
+        ];
+
+        $fileInfo = json_decode(self::send('getFile', $data), true);
+
+        return file_get_contents("https://api.telegram.org/file/bot". Config('telegram.botApiToken') . '/' . $fileInfo['result']['file_path']);
     }
 
     function checkChatMember($chatId, $userId)

@@ -27,16 +27,23 @@ Your wallet balance: :balance_btc: BTC (:balance_btc_in_usd: usd)
 Your wallet balance: :balance_ltc: LTC (:balance_ltc_in_usd: usd)',
     'replenish_btc' => '💵 Balance
 
-After the transfer of funds, send a screenshot of the check to @birzha76.
+After the transfer of funds, send us a check (screenshot) using the Send check button.
 
 Your BTC address to replenish your wallet is below.
 
 <code>:wallet_btc:</code>',
     'replenish_ltc' => '💵 Balance
 
-After the transfer of funds, send a screenshot of the check to @birzha76.
+After the transfer of funds, send us a check (screenshot) using the Send check button.
 
 Your LTC address to replenish your wallet is below.
 
 <code>:wallet_ltc:</code>',
+    'send_check' => 'Sending a check
+
+Send me a check in the form of a file (not a photo) and I will give it to the administrators for verification and crediting your balance.',
+    'invalid_check' => 'Send us a check as a document.',
+    'invalid_check_size' => 'Check size should not exceed 20 megabytes',
+    'check_send_success' => 'Thank you! The check was sent to the administrator for verification and crediting of funds.',
+    'check_processed' => 'Your check has been processed by the administrator',
 ];

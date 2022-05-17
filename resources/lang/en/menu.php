@@ -50,6 +50,22 @@ return [
         [
 
             [
+                'text' => __('button.send_check'),
+                'callback_data' => 'send_check',
+            ],
+        ],
+        [
+
+            [
+                'text' => __('button.cancel'),
+                'callback_data' => 'balance',
+            ],
+        ],
+    ],
+    'balance_send_check_menu' => [
+        [
+
+            [
                 'text' => __('button.cancel'),
                 'callback_data' => 'balance',
             ],
