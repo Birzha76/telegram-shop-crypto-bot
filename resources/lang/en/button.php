@@ -14,5 +14,6 @@ return [
     'balance' => 'Balance',
     'replenish_btc' => 'Replenish BTC',
     'replenish_ltc' => 'Replenish LTC',
+    'cash_app' => 'Cash App',
     'send_check' => 'Send Check',
 ];

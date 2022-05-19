@@ -39,6 +39,10 @@ After the transfer of funds, send us a check (screenshot) using the Send check b
 Your LTC address to replenish your wallet is below.
 
 <code>:wallet_ltc:</code>',
+    'cash_app' => '💵 Cash App
+
+:cash_text:
+<a href=":cash_img:">⁠</a>',
     'send_check' => 'Sending a check
 
 Send me a check in the form of a file (not a photo) and I will give it to the administrators for verification and crediting your balance.',

@@ -267,6 +267,18 @@ Price: ' . $product->price . ' $
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
                     break;
+                case 'cash_app':
+                    $answer = str_replace([
+                        ':cash_img:',
+                        ':cash_text:',
+                    ], [
+                        asset('storage/' . Setting::where('param', 'cash_img')->first()->content),
+                        Setting::where('param', 'cash_text')->first()->content,
+                    ], __('answer.cash_app'));
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_replenish_menu'));
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard, false);
+                    break;
                 case 'send_check':
                     $answer = __('answer.send_check');
                     $keyboard = TelegramBot::inlineKeyboard(__('menu.balance_send_check_menu'));
