@@ -15,7 +15,11 @@ use App\Http\Controllers\CashController;
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
     Route::get('/home', [MainController::class, 'index'])->name('home');
     Route::resource('categories', CategoryController::class)->middleware('admin.super');
+
+    Route::get('/products/excel', [ProductController::class, 'excel'])->middleware('admin.super')->name('products.excel');
+    Route::post('/products/excel', [ProductController::class, 'importFromExcel'])->middleware('admin.super')->name('products.excel-upload');
     Route::resource('products', ProductController::class)->middleware('admin.super');
+
     Route::resource('checks', CheckController::class)->middleware('admin.super');
     Route::resource('users', UserController::class)->middleware('admin.super');
     Route::resource('tg-users', TelegramUserController::class)->middleware('admin.super');

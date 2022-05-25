@@ -18,6 +18,8 @@ return [
     'request_date' => 'Request Date',
     'update_date' => 'Update date',
     'status' => 'Status',
+    'file' => 'File',
+    'select_file' => 'Select a file',
 
     'category' => 'Category',
     'categories' => 'Categories',
@@ -49,6 +51,9 @@ return [
     'product_added' => 'Product added',
     'product_updated' => 'Product updated',
     'product_removed' => 'Product removed',
+    'adding_from_excel' => 'Adding from Excel',
+    'bad_format' => 'The file does not match the format',
+    'products_import_success' => 'Products successfully imported',
 
     'checks' => 'Checks',
     'check' => 'Check',

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -105,5 +107,62 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.products.index')->with('success', __('ui.product_removed'));
+    }
+
+    public function excel()
+    {
+        return view('admin.products.excel');
+    }
+
+    public function importFromExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimetypes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/excel|file',
+        ]);
+
+        $array = Excel::toArray(collect([]), $request->file('file'));
+
+        $result = $array[0];
+
+        if ($result[0][0] !== 'Name' || $result[0][1] !== 'Select a category' || $result[0][2] !== 'Price' || $result[0][3] !== 'Description' || $result[0][4] !== 'Product content') {
+            return redirect()->route('admin.products.excel')->with('success', __('ui.bad_format'));
+        }
+
+        unset($result[0]);
+
+        foreach ($result as $index => $item) {
+            if ($item[0] == null) unset($result[$index]);
+        }
+
+        $result = array_values($result);
+
+        $data = [
+            'results' => $result,
+        ];
+
+        $validator = Validator::make($data, [
+            'results' => 'required|array',
+            'results.*.0' => 'required|min:3|max:20',
+            'results.*.1' => 'required|exists:categories,id',
+            'results.*.2' => 'required|min:0',
+            'results.*.3' => 'required|min:10|max:1024',
+            'results.*.4' => 'required|min:3',
+        ]);
+
+        if ($validator->fails()){
+            return redirect()->route('admin.products.excel')->with('success', $validator->errors()->first());
+        }
+
+        foreach ($result as $product) {
+            Product::create([
+                'title' => $product[0],
+                'category_id' => $product[1],
+                'price' => $product[2],
+                'description' => $product[3],
+                'details' => $product[4],
+            ]);
+        }
+
+        return redirect()->route('admin.products.excel')->with('success', __('ui.products_import_success'));
     }
 }
