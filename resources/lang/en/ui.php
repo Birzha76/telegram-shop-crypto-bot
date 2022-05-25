@@ -100,4 +100,12 @@ return [
     'administrator_added' => 'Administrator added',
     'admin_updated' => 'Admin updated',
     'administrator_removed' => 'Administrator removed',
+
+    'cash' => 'Cash',
+    'cash_editing' => 'Cash Editing',
+    'cash_updated' => 'Information about cash acceptance has been updated',
+    'cash_img' => 'Image for payment',
+    'cash_enter_img' => 'Choose image for payment',
+    'cash_text' => 'Text for payment',
+    'cash_enter_text' => 'Enter text for payment',
 ];

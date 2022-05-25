@@ -82,7 +82,7 @@ class TelegramHelper
         $menu[] = [
             [
                 'text' => __('button.back'),
-                'callback_data' => 'get_category_' . $category->category_id,
+                'callback_data' => $category->category_id !== null ? 'get_category_' . $category->category_id : 'catalog',
             ]
         ];
 

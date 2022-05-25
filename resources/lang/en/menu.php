@@ -41,6 +41,13 @@ return [
         [
 
             [
+                'text' => __('button.cash_app'),
+                'callback_data' => 'cash_app',
+            ],
+        ],
+        [
+
+            [
                 'text' => __('button.back'),
                 'callback_data' => 'home',
             ],

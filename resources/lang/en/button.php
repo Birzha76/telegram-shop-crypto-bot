@@ -7,12 +7,14 @@ return [
 
     'cabinet' => 'Cabinet',
 
-    'catalog' => 'Catalog',
+    'catalog' => '🛒 Store',
     'buy_with_btc' => 'Buy with BTC',
     'buy_with_ltc' => 'Buy with LTC',
 
-    'balance' => 'Balance',
+    'balance' => '💸 Wallet',
     'replenish_btc' => 'Replenish BTC',
     'replenish_ltc' => 'Replenish LTC',
     'send_check' => 'Send Check',
+
+    'cash_app' => 'Cash App',
 ];
