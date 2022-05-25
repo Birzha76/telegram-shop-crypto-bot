@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CheckController;
+use App\Http\Controllers\CashController;
 
 Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
     Route::get('/home', [MainController::class, 'index'])->name('home');
@@ -19,6 +20,9 @@ Route::prefix('/admin')->name('admin.')->middleware('admin')->group(function() {
     Route::resource('users', UserController::class)->middleware('admin.super');
     Route::resource('tg-users', TelegramUserController::class)->middleware('admin.super');
     Route::resource('settings', SettingController::class)->middleware('admin.super');
+
+    Route::get('/cash', [CashController::class, 'edit'])->middleware('admin.super')->name('cash.index');
+    Route::post('/cash', [CashController::class, 'update'])->middleware('admin.super')->name('cash.update');
 });
 
 Route::name('user.')->group(function(){
