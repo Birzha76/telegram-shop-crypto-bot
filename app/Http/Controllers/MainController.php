@@ -58,12 +58,6 @@ class MainController extends Controller
 
         $userInfo = TelegramUser::where('uid', $uid)->first();
 
-        if (!empty($text)) {
-            $userRef = TelegramBot::parseRef($text);
-        }else {
-            $userRef = false;
-        }
-
         if ($userInfo == null) {
 
             $dataForCreate = [
@@ -83,7 +77,8 @@ class MainController extends Controller
         }
 
         if (!empty($userInfo->ban) && $userInfo->ban == '1') {
-            TelegramUser::where('uid', $uid)->update(['ban' => 0]);
+            $userInfo->ban = 0;
+            $userInfo->save();
         }
 
         $keyboard = null;
@@ -217,7 +212,52 @@ Price: ' . $product->price . ' $
 
                     TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
 
-                    $product->delete();
+                    $product->user_id = $userInfo->id;
+                    $product->save();
+                    break;
+                case 'purchases':
+                    if ($userInfo->purchases->count() == 0) {
+                        TelegramBot::callbackAnnotationSet($callback_id, __('answer.no_purchases'));
+                        exit();
+                    }
+
+                    $answer = __('answer.your_purchases');
+                    $menu = [];
+
+                    foreach ($userInfo->purchases as $product) {
+                        $menu[] = [
+                            [
+                                'text' => $product->title,
+                                'callback_data' => 'get_details_' . $product->id,
+                            ]
+                        ];
+                    }
+
+                    $menu[] = [
+                        [
+                            'text' => __('button.back'),
+                            'callback_data' => 'home',
+                        ]
+                    ];
+
+                    $keyboard = TelegramBot::inlineKeyboard($menu);
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
+                    break;
+                case (stripos($callback_data, 'get_details') !== false):
+                    $productId = explode('get_details_', $callback_data)[1];
+
+                    $product = Product::find($productId);
+
+                    $answer = str_replace([
+                        ':details:',
+                    ], [
+                        $product->details,
+                    ], __('answer.your_purchases_details'));
+
+                    $keyboard = TelegramBot::inlineKeyboard(__('menu.your_purchases_details'));
+
+                    TelegramHelper::sendOrEditMessage($userInfo, $answer, $keyboard);
                     break;
                 case 'balance':
                     $exchangeRateBtc = Exchanger::getCryptoCurrency('BTC');
@@ -388,6 +428,7 @@ Price: ' . $product->price . ' $
 
     public function fix()
     {
-        //
+        $user = TelegramUser::find(1);
+        dd($user->purchases->count());
     }
 }

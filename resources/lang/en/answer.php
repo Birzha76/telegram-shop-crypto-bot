@@ -7,6 +7,11 @@ return [
 ✅ Click on item and buy it with seconds!',
 
     'catalog_main' => 'Shop',
+    'no_purchases' => 'You haven\'t made any purchases yet',
+    'your_purchases' => 'Your purchases: ',
+    'your_purchases_details' => 'Here is your item:
+
+:details:',
     'no_money' => '🚫 You don\'t have enough money',
     'already_bought' => 'Someone has already bought this item',
     'your_item' => 'Thank you for your purchase!

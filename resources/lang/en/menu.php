@@ -16,6 +16,13 @@ return [
                 'callback_data' => 'balance',
             ],
         ],
+        [
+
+            [
+                'text' => __('button.purchases'),
+                'callback_data' => 'purchases',
+            ],
+        ],
     ],
     'your_item_menu' => [
         [
@@ -23,6 +30,15 @@ return [
             [
                 'text' => __('button.back'),
                 'callback_data' => 'home',
+            ],
+        ],
+    ],
+    'your_purchases_details' => [
+        [
+
+            [
+                'text' => __('button.back'),
+                'callback_data' => 'purchases',
             ],
         ],
     ],

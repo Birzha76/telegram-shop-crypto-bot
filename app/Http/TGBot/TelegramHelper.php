@@ -66,7 +66,7 @@ class TelegramHelper
 
     public static function getProductsMenuByCategory($category)
     {
-        $products = Product::where('category_id', $category->id)->get();
+        $products = Product::where('category_id', $category->id)->whereNull('user_id')->get();
 
         $menu = [];
 

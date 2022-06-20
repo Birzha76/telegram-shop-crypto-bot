@@ -18,4 +18,9 @@ class TelegramUser extends Model
         'last_message_id',
         'ban',
     ];
+
+    public function purchases()
+    {
+        return $this->hasMany(Product::class, 'user_id', 'id');
+    }
 }

@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(20);
+        $products = Product::whereNull('user_id')->paginate(20);
 
         return view('admin.products.index', compact('products'));
     }
@@ -145,7 +145,7 @@ class ProductController extends Controller
             'results.*.0' => 'required|min:3|max:20',
             'results.*.1' => 'required|exists:categories,id',
             'results.*.2' => 'required|min:0',
-            'results.*.3' => 'required|min:10|max:1024',
+            'results.*.3' => 'required|min:1|max:1024',
             'results.*.4' => 'required|min:3',
         ]);
 
